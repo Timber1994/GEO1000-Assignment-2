@@ -11,9 +11,22 @@ from distance import haversin
 
 
 def query():
+    print("I will find the distance for you between 2 places.")
+    print("Enter place 1?")
+    place1 = input()
+    print("Enter place 2?")
+    place2 = input()
+    print(f"Coordinates for {place1}: {nominatim(format_dd_as_dms(place1)}")
+    print(f"Coordinates for {place2}: {nominatim(format_dd_as_dms(place2)}")
+    print(f"The distance between {place1} and {place2} is {haversin(place1, place2)} km")
+    print(f"Bye bye.")
+
+    print(f"I did not understand this place: {place1}")
+    print(f"I did not understand this place: {place2}")
+
     """Query the WGS'84 coordinates of 2 places and compute the distance
     between them.
-
+    
     A sample run of the program:
 
 I will find the distance for you between 2 places.
