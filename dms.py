@@ -32,7 +32,7 @@ def format_dms(dms, is_latitude):
     returns:
     Formatted string
     """
-    degrees, minutes, seconds=dms                       # Set tuple variables
+    degrees, minutes, seconds=dms                       # Unpack tuple
     direction = (                                       # Assign letter based on cardinal direction
         "N" if (is_latitude and degrees >= 0) else
         "S" if (is_latitude and degrees < 0) else
@@ -50,7 +50,7 @@ def format_dd_as_dms(coordinate):
     returns:
     Formatted string
     """
-    latitude, longitude=coordinate                                  # Set tuple variables
+    latitude, longitude=coordinate                                  # Unpack tuple
     dms_latitude=format_dms(dd_dms(latitude), True)        # Call functions to convert latitude and longitude
     dms_longitude=format_dms(dd_dms(longitude), False)
     return f"{dms_latitude}, {dms_longitude}"                       # Format complete dms string
