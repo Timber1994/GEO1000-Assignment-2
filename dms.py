@@ -1,6 +1,6 @@
 # GEO1000 - Assignment 2
 # Authors: Timber Groeneveld
-# Studentnumbers:
+# Studentnumbers: 4213513
 
 
 def dd_dms(decdegrees):
@@ -38,23 +38,21 @@ def format_dms(dms, is_latitude):
         "S" if (is_latitude and degrees < 0) else
         "E" if (not is_latitude and degrees >= 0) else
         "W")
-
-    single_coordinate_string=f"""{direction} {degrees}° {minutes}' {seconds:.4f}" """
+    abs_degrees=abs(degrees)
+    single_coordinate_string=f"{direction} {abs_degrees:3.0f}° {minutes:2.0f}' {seconds:9.4f}\""
     return single_coordinate_string
 
 def format_dd_as_dms(coordinate):
     """Returns a formatted string for a coordinate
-
     Arguments:
-
     coordinate -- 2-tuple: (latitude, longitude)
-
     returns:
-    
     Formatted string
     """
-    pass
-
+    latitude, longitude=coordinate
+    dms_latitude=format_dms(dd_dms(latitude), True)
+    dms_longitude=format_dms(dd_dms(longitude), False)
+    return f"{dms_latitude}, {dms_longitude}"
 
 def _test():
     """Test whether the format_dd_as_dms function works correctly
