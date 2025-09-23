@@ -5,35 +5,42 @@
 
 def dd_dms(decdegrees):
     """Returns tuple (degrees, minutes, seconds) for a value in decimal degrees
-
     Arguments:
-
     decdegrees -- float that represents a latitude or longitude value
-    
     returns:
-    
     3-tuple of *not* rounded floats (degrees, minutes, seconds) 
     """
-    pass
+    decdegrees_abs=abs(float(decdegrees))
+    degrees=int(decdegrees_abs)             # Calculate whole degrees
+    min_sec=decdegrees_abs-degrees
+    minutes=int(min_sec*60)                 # Calculate whole minutes
+    seconds=(min_sec*3600)%60               # Calculate decimal seconds
+    if decdegrees<0:
+        degrees=-degrees
+    return degrees, minutes, seconds
+
 
 
 def format_dms(dms, is_latitude):
     """Returns a formatted string for *one* part of the coordinate.
-
     Arguments:
-
     dms -- tuple of floats (degrees, minutes, seconds)
            that represents a latitude or longitude value
     is_latitude -- boolean that specifies whether ordinate is latitude or longitude
-
     If is_latitude == True dms represents latitude (north/south)
     If is_latitude == False dms represents longitude (east/west)
-
     returns:
-    
     Formatted string
     """
-    pass
+    degrees, minutes, seconds=dms
+    direction = (
+        "N" if (is_latitude and degrees >= 0) else
+        "S" if (is_latitude and degrees < 0) else
+        "E" if (not is_latitude and degrees >= 0) else
+        "W")
+
+    single_coordinate_string=f"""{direction} {degrees}° {minutes}' {seconds}" """
+    return single_coordinate_string
 
 
 def format_dd_as_dms(coordinate):

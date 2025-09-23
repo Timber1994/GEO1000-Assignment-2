@@ -22,7 +22,7 @@ def nominatim(place):
         'prague': (50.0596288, 14.446459273258009),
         'new york': (40.7127281, -74.0060152),
     }
-    # If the palce does not exist in place_loc_dict, return an empty tuple 
+    # If the place does not exist in place_loc_dict, return an empty tuple
     loc = place_loc_dict.get(place.lower(), ())
     return loc
 
