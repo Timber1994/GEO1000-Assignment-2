@@ -10,14 +10,14 @@ def dd_dms(decdegrees):
     returns:
     3-tuple of *not* rounded floats (degrees, minutes, seconds) 
     """
-    decdegrees_abs=abs(float(decdegrees))
-    degrees=int(decdegrees_abs)             # Calculate whole degrees
-    min_sec=decdegrees_abs-degrees
-    minutes=int(min_sec*60)                 # Calculate whole minutes
-    seconds=(min_sec*3600)%60               # Calculate decimal seconds
-    if decdegrees<0:
+    decdegrees_abs=abs(float(decdegrees))               # Convert to absolute values
+    degrees=int(decdegrees_abs)                         # Calculate whole degrees
+    min_sec=decdegrees_abs-degrees                      # Isolate the decimal component
+    minutes=int(min_sec*60)                             # Calculate whole minutes
+    seconds=(min_sec*3600)%60                           # Calculate decimal seconds
+    if decdegrees<0:                                    # Process negative degrees
         degrees=-degrees
-    return degrees, minutes, seconds
+    return degrees, minutes, seconds                    # Return dms tuple
 
 
 
@@ -32,13 +32,14 @@ def format_dms(dms, is_latitude):
     returns:
     Formatted string
     """
-    degrees, minutes, seconds=dms
-    direction = (
+    degrees, minutes, seconds=dms                       # Set tuple variables
+    direction = (                                       # Assign letter based on cardinal direction
         "N" if (is_latitude and degrees >= 0) else
         "S" if (is_latitude and degrees < 0) else
         "E" if (not is_latitude and degrees >= 0) else
         "W")
-    abs_degrees=abs(degrees)
+    abs_degrees=abs(degrees)                            # Remove minus sign from output
+    # Format and return single coordinate string
     single_coordinate_string=f"{direction} {abs_degrees:3.0f}° {minutes:2.0f}' {seconds:9.4f}\""
     return single_coordinate_string
 
@@ -49,10 +50,10 @@ def format_dd_as_dms(coordinate):
     returns:
     Formatted string
     """
-    latitude, longitude=coordinate
-    dms_latitude=format_dms(dd_dms(latitude), True)
+    latitude, longitude=coordinate                                  # Set tuple variables
+    dms_latitude=format_dms(dd_dms(latitude), True)        # Call functions to convert latitude and longitude
     dms_longitude=format_dms(dd_dms(longitude), False)
-    return f"{dms_latitude}, {dms_longitude}"
+    return f"{dms_latitude}, {dms_longitude}"                       # Format complete dms string
 
 def _test():
     """Test whether the format_dd_as_dms function works correctly
