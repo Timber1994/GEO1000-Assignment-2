@@ -1,6 +1,6 @@
 # GEO1000 - Assignment 2
 # Authors: Timber Groeneveld
-# Studentnumbers:
+# Studentnumbers: 4213513
 
 
 from nominatim import nominatim
