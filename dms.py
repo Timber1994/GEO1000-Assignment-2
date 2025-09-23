@@ -39,9 +39,8 @@ def format_dms(dms, is_latitude):
         "E" if (not is_latitude and degrees >= 0) else
         "W")
 
-    single_coordinate_string=f"""{direction} {degrees}° {minutes}' {seconds}" """
+    single_coordinate_string=f"""{direction} {degrees}° {minutes}' {seconds:.4f}" """
     return single_coordinate_string
-
 
 def format_dd_as_dms(coordinate):
     """Returns a formatted string for a coordinate
