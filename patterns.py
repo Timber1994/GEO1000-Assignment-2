@@ -1,10 +1,17 @@
 # GEO1000 - Assignment 2 (part 3)
 # Authors: Timber Groeneveld
-# Studentnumbers:
+# Student numbers: 4213513
 
 
 def square_corners(center, half_size):
-    """
+    x_center,y_center=center
+    p1=((x_center-half_size),(y_center-half_size))
+    p2=((x_center+half_size),(y_center-half_size))
+    p3=((x_center+half_size),(y_center+half_size))
+    p4=((x_center-half_size),(y_center+half_size))
+    return p1,p2,p3,p4
+
+"""
     Computes the four corners of a square given its center and half side length.
 
     Arguments:
@@ -17,8 +24,7 @@ def square_corners(center, half_size):
             p2 = bottom right
             p3 = top right
             p4 = top left
-    """
-    pass
+"""
 
 
 def wkt(p1, p2, p3, p4):

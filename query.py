@@ -39,7 +39,7 @@ def query(first=True):
 
     coord2 = nominatim(place2)
     if not coord2:
-        print(f"I did not understand this place:{place2}")
+        print(f"I did not understand this place: {place2}")
     else:
         print(f"Coordinates for {place2}: {format_dd_as_dms(coord2)}")
 
