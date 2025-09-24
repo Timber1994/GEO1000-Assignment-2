@@ -10,48 +10,45 @@ from dms import format_dd_as_dms
 from distance import haversin
 
 
-def query():
-    print("I will find the distance for you between 2 places.")
-    print("Enter place 1?")
-    place1 = input()
-    print("Enter place 2?")
-    place2 = input()
-    print(f"Coordinates for {place1}: {nominatim(format_dd_as_dms(place1)}")
-    print(f"Coordinates for {place2}: {nominatim(format_dd_as_dms(place2)}")
-    print(f"The distance between {place1} and {place2} is {haversin(place1, place2)} km")
-    print(f"Bye bye.")
-
-    print(f"I did not understand this place: {place1}")
-    print(f"I did not understand this place: {place2}")
-
+def query(first=True):
     """Query the WGS'84 coordinates of 2 places and compute the distance
-    between them.
-    
-    A sample run of the program:
+        between them."""
+    # Displays a message when calling the function for the first time
+    if first:
+        print("I will find the distance for you between 2 places.")
 
-I will find the distance for you between 2 places.
-Enter place 1? Delft
-Enter place 2? Bratislava
-Coordinates for Delft: N  51° 59' 58.0459", E   4° 21' 45.8083"
-Coordinates for Bratislava: N  48°  9'  6.1157", E  17°  6' 33.5027"
-The distance between Delft and Bratislava is 1003.4 km
-Enter place 1? 
-Enter place 2? quit
-Bye bye.
+    # Asks the user to input a place name, if the user writes 'quit' it returns "Bye bye." and terminates the function
+    print("Enter place 1?")
+    place1=input().strip()
+    if place1 == 'quit':
+        print("Bye bye.")
+        return
 
-    And another run:
+    print("Enter place 2?")
+    place2 = input().strip()
+    if place2 == 'quit':
+        print("Bye bye.")
+        return
 
-I will find the distance for you between 2 places.
-Enter place 1? where is this place?
-Enter place 2? 
-I did not understand this place: where is this place?
-I did not understand this place: 
-Enter place 1? quit
-Enter place 2? 
-Bye bye.
+    # Looks up the coordinate using the nominatim function and either prints the correct coordinates or gives an error
+    coord1 = nominatim(place1)
+    if not coord1:
+        print(f"I did not understand this place: {place1}")
+    else:
+        print(f"Coordinates for {place1}: {format_dd_as_dms(coord1)}")
 
-    """
-    pass
+    coord2 = nominatim(place2)
+    if not coord2:
+        print(f"I did not understand this place:{place2}")
+    else:
+        print(f"Coordinates for {place2}: {format_dd_as_dms(coord2)}")
+
+    # Calculates and prints the distance between the places using the haversin function
+    if coord1 and coord2:
+        print(f"The distance between {place1} and {place2} is {haversin(coord1, coord2):.1f} km")
+
+    # Recursion skipping the first message
+    query(first=False)
 
 
 if __name__ == "__main__":
