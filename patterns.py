@@ -5,19 +5,17 @@
 
 def square_corners(center, half_size):
     x_center,y_center=center
-    p1=((x_center-half_size),(y_center-half_size))
-    p2=((x_center+half_size),(y_center-half_size))
-    p3=((x_center+half_size),(y_center+half_size))
-    p4=((x_center-half_size),(y_center+half_size))
+    p1=(x_center-half_size,y_center-half_size)
+    p2=(x_center+half_size,y_center-half_size)
+    p3=(x_center+half_size,y_center+half_size)
+    p4=(x_center-half_size,y_center+half_size)
     return p1,p2,p3,p4
 
 """
     Computes the four corners of a square given its center and half side length.
-
     Arguments:
         center: tuple of floats (x, y) - center coordinates of the square
         half_size: float - half the length of one side of the square
-
     Returns:
         tuple of 4 points (p1, p2, p3, p4) in counterclockwise order:
             p1 = bottom left
@@ -26,24 +24,25 @@ def square_corners(center, half_size):
             p4 = top left
 """
 
-
 def wkt(p1, p2, p3, p4):
-    """
-    Returns the Well Known Text (WKT) representation of a square defined by four corner points.
+    points = [p1, p2, p3, p4]
+    wkt_string= f"POLYGON (({p1[0]:.6f} {p1[1]:.6f},{p2[0]:.6f} {p2[1]:.6f},{p3[0]:.6f} {p3[1]:.6f},{p4[0]:.6f} {p4[1]:.6f},{p1[0]:.6f} {p1[1]:.6f}))"
+    return wkt_string
 
+
+"""
+    Returns the Well Known Text (WKT) representation of a square defined by four corner points.
     Arguments:
         p1--p4: 2-tuples of floats representing the square corners in counterclockwise order:
             p1 = bottom left
             p2 = bottom right
             p3 = top right
             p4 = top left
-
     Returns:
         str: WKT string in the format:
             POLYGON((x1 y1, x2 y2, x3 y3, x4 y4, x1 y1))
             with coordinates formatted to six decimal places.
     """
-    pass
 
 
 def pattern_a(remaining_steps, c, size, scale_factor, file_nm):

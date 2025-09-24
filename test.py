@@ -1,52 +1,18 @@
-from nominatim import nominatim
-# from nominatim_offline import nominatim # can be used for testing if you are offline
-# or if the online Nominatim service does not work
-from dms import format_dd_as_dms
-from distance import haversin
+def wkt(p1, p2, p3, p4):
+    wtk_string = f"{p1:.6f},{p2:.6f},{p3:.6f},{p4:.6f}"
+    return wtk_string
 
 
-def query():
-    print("I will find the distance for you between 2 places.")
-    print("Enter place 1?")
-    place1 = input()
-    print("Enter place 2?")
-    place2 = input()
-    print(f"Coordinates for {place1}: {nominatim(place1)}")
-    print(f"Coordinates for {place2}: {nominatim(place2)}")
-    print(f"The distance between {place1} and {place2} is {haversin(place1, place2)} km")
-    print(f"Bye bye.")
-
-    print(f"I did not understand this place: {place1}")
-    print(f"I did not understand this place: {place2}")
-
-    """Query the WGS'84 coordinates of 2 places and compute the distance
-    between them.
-
-    A sample run of the program:
-
-I will find the distance for you between 2 places.
-Enter place 1? Delft
-Enter place 2? Bratislava
-Coordinates for Delft: N  51° 59' 58.0459", E   4° 21' 45.8083"
-Coordinates for Bratislava: N  48°  9'  6.1157", E  17°  6' 33.5027"
-The distance between Delft and Bratislava is 1003.4 km
-Enter place 1? 
-Enter place 2? quit
-Bye bye.
-
-    And another run:
-
-I will find the distance for you between 2 places.
-Enter place 1? where is this place?
-Enter place 2? 
-I did not understand this place: where is this place?
-I did not understand this place: 
-Enter place 1? quit
-Enter place 2? 
-Bye bye.
-
+"""
+    Returns the Well Known Text (WKT) representation of a square defined by four corner points.
+    Arguments:
+        p1--p4: 2-tuples of floats representing the square corners in counterclockwise order:
+            p1 = bottom left
+            p2 = bottom right
+            p3 = top right
+            p4 = top left
+    Returns:
+        str: WKT string in the format:
+            POLYGON((x1 y1, x2 y2, x3 y3, x4 y4, x1 y1))
+            with coordinates formatted to six decimal places.
     """
-    pass
-
-if __name__ == "__main__":
-    query()
