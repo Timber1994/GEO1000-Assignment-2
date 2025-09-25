@@ -16,9 +16,37 @@ def pattern_a(remaining_steps, c, size, scale_factor, file_nm):
     wkt_string=wkt(*corners)
     with open(file_nm, "a") as file:
         file.write(wkt_string + "\n")
+
     if remaining_steps>0:
         for corner in corners:
             pattern_a(remaining_steps-1,corner,size*scale_factor,scale_factor,file_nm)
+
+def pattern_b(remaining_steps, c, size, scale_factor, file_nm):
+    corners=square_corners(c,size)
+
+    if remaining_steps>0:
+        for corner in corners:
+            pattern_b(remaining_steps-1,corner,size*scale_factor,scale_factor,file_nm)
+
+    wkt_string=wkt(*corners)
+    with open(file_nm, "a") as file:
+        file.write(wkt_string + "\n")
+
+def pattern_c(remaining_steps, c, size, scale_factor, file_nm):
+    corners=square_corners(c,size)
+    p1, p2, p3, p4 = corners
+
+    if remaining_steps>0:
+        for corner in [p4,p3]:
+            pattern_c(remaining_steps-1, corner, size*scale_factor, scale_factor, file_nm)
+
+    wkt_string=wkt(*corners)
+    with open(file_nm, "a") as file:
+        file.write(wkt_string + "\n")
+
+    if remaining_steps>0:
+        for corner in [p1,p2]:
+            pattern_a(remaining_steps-1, corner, size*scale_factor, scale_factor, file_nm)
 
     """
     Recursively draws squares in all four corners of the current square.
@@ -32,4 +60,6 @@ def pattern_a(remaining_steps, c, size, scale_factor, file_nm):
         None
     """
 
-pattern_a(3,(4,4),1,0.5,"polygontest.txt")
+#pattern_a(3,(4,4),1,0.5,"polygontesta.txt")
+#pattern_b(3,(4,4),1,0.5,"polygontestb.txt")
+pattern_c(3,(4,4),1,0.45,"polygontestc.txt")

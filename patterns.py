@@ -10,7 +10,6 @@ def square_corners(center, half_size):
     p3=(x_center+half_size,y_center+half_size)
     p4=(x_center-half_size,y_center+half_size)
     return p1,p2,p3,p4
-
 """
     Computes the four corners of a square given its center and half side length.
     Arguments:
@@ -28,8 +27,6 @@ def wkt(p1, p2, p3, p4):
     points = [p1, p2, p3, p4]
     wkt_string= f"POLYGON (({p1[0]:.6f} {p1[1]:.6f},{p2[0]:.6f} {p2[1]:.6f},{p3[0]:.6f} {p3[1]:.6f},{p4[0]:.6f} {p4[1]:.6f},{p1[0]:.6f} {p1[1]:.6f}))"
     return wkt_string
-
-
 """
     Returns the Well Known Text (WKT) representation of a square defined by four corner points.
     Arguments:
@@ -68,59 +65,57 @@ def pattern_a(remaining_steps, c, size, scale_factor, file_nm):
 
 def pattern_b(remaining_steps, c, size, scale_factor, file_nm):
     corners=square_corners(c,size)
-    wkt_string=wkt(*corners)
-    with open(file_nm, "a") as file:
-        file.write(wkt_string + "\n")
 
     if remaining_steps>0:
         for corner in corners:
-            pattern_a(remaining_steps-1,corner,size*scale_factor,scale_factor,file_nm)
+            pattern_b(remaining_steps-1,corner,size*scale_factor,scale_factor,file_nm)
+
+    wkt_string=wkt(*corners)
+    with open(file_nm, "a") as file:
+        file.write(wkt_string + "\n")
     """
     Recursively draws squares in all four corners, then writes the current square.
-
     Arguments:
         remaining_steps: int - number of recursive steps left
         c: tuple - center coordinates of the current square
         size: float - half side length of the current square
         scale_factor: float - multiplier to determine size of next square
         file_nm: str - output file name
-
     Returns:
         None
     """
-    pass
-
 
 def pattern_c(remaining_steps, c, size, scale_factor, file_nm):
     corners=square_corners(c,size)
+    p1, p2, p3, p4 = corners
+
+    if remaining_steps>0:
+        for corner in [p4,p3]:
+            pattern_c(remaining_steps-1, corner, size*scale_factor, scale_factor, file_nm)
+
     wkt_string=wkt(*corners)
     with open(file_nm, "a") as file:
         file.write(wkt_string + "\n")
 
     if remaining_steps>0:
-        for corner in corners:
-            pattern_a(remaining_steps-1,corner,size*scale_factor,scale_factor,file_nm)
+        for corner in [p1,p2]:
+            pattern_c(remaining_steps-1, corner, size*scale_factor, scale_factor, file_nm)
     """
     Recursively draws squares in top corners first, writes the current square, then bottom corners.
-
     Arguments:
         remaining_steps: int - number of recursive steps left
         c: tuple - center coordinates of the current square
         size: float - half side length of the current square
         scale_factor: float - multiplier to determine size of next square
         file_nm: str - output file name
-
     Returns:
         None
     """
-    pass
-
 
 # note, main has optional arguments, see Sec 13.5 of ThinkPython2
 def main(n=3, c=(0.0, 0.0), size=10.0, scale_factor=0.45):
     """
     Entry point of the program. Initializes output files and triggers square drawing patterns.
-
     Arguments:
         n: int - number of recursive steps to perform
         c: tuple - center coordinates of the initial square
@@ -135,13 +130,12 @@ def main(n=3, c=(0.0, 0.0), size=10.0, scale_factor=0.45):
     """
     funcs = [pattern_a, pattern_b, pattern_c]
     file_nms = ["pattern_a.txt", "pattern_b.txt", "pattern_c.txt"]
+    header_line="steps_left;geometry\n"
 
     for func, file_nm_out in zip(funcs, file_nms):
-        # Finish this function (do *not* change the lines already given,
-        # but replace the pass statement below in this function
-        # and remove this comment)
-        pass
-
+        with open(file_nm_out,"w") as file:
+            file.write(header_line)
+        func(n,c,size,scale_factor,file_nm_out)
 
 if __name__ == "__main__":
     main(3)
