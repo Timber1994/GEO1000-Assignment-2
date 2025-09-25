@@ -44,25 +44,37 @@ def wkt(p1, p2, p3, p4):
             with coordinates formatted to six decimal places.
     """
 
-
 def pattern_a(remaining_steps, c, size, scale_factor, file_nm):
+    corners=square_corners(c,size)
+    wkt_string=wkt(*corners)
+    with open(file_nm, "a") as file:
+        file.write(wkt_string + "\n")
+
+    if remaining_steps>0:
+        for corner in corners:
+            pattern_a(remaining_steps-1,corner,size*scale_factor,scale_factor,file_nm)
+
     """
     Recursively draws squares in all four corners of the current square.
-
     Arguments:
         remaining_steps: int - number of recursive steps left
         c: tuple - center coordinates of the current square
         size: float - half side length of the current square
         scale_factor: float - multiplier to determine size of next square (e.g. 0.75 shrinks)
         file_nm: str - output file name
-
     Returns:
         None
     """
-    pass
-
 
 def pattern_b(remaining_steps, c, size, scale_factor, file_nm):
+    corners=square_corners(c,size)
+    wkt_string=wkt(*corners)
+    with open(file_nm, "a") as file:
+        file.write(wkt_string + "\n")
+
+    if remaining_steps>0:
+        for corner in corners:
+            pattern_a(remaining_steps-1,corner,size*scale_factor,scale_factor,file_nm)
     """
     Recursively draws squares in all four corners, then writes the current square.
 
@@ -80,6 +92,14 @@ def pattern_b(remaining_steps, c, size, scale_factor, file_nm):
 
 
 def pattern_c(remaining_steps, c, size, scale_factor, file_nm):
+    corners=square_corners(c,size)
+    wkt_string=wkt(*corners)
+    with open(file_nm, "a") as file:
+        file.write(wkt_string + "\n")
+
+    if remaining_steps>0:
+        for corner in corners:
+            pattern_a(remaining_steps-1,corner,size*scale_factor,scale_factor,file_nm)
     """
     Recursively draws squares in top corners first, writes the current square, then bottom corners.
 
